@@ -1,0 +1,60 @@
+数据结构：
+1.用户数据：用户数据是以用户为单位整理的包括用户情绪等属性和用户id，name，地理位置等数据
+结构：
+    ID：int唯一标识
+    screen_name：string用户名，为了简化处理，不同阶段的用户改名不考虑
+    location ： list地理位置列表，考虑到后期可能扩充地理位置而准备
+    age ： list利用词典得到的年龄属性：分为13-18， 19-信息， xx-xx
+    gender ： list利用词典得到的性别推断，负数为男性，正数为女性
+    emotion ：list利用词典得到的情绪推断，按顺序为：positive, negative, anger, anticipation
+                                            , disgust, fear, joy, sadness, surprise, trust
+    character :list利用词典得到的性格判断，按顺序为A,C,E,N,O
+    emotion_tweet ： int，包含情绪词的推文数量
+    character_tweet ： int，包含性格词的推文数量
+    age_tweet ： int 包含年龄词的推文数量
+    gender_tweet ： int 包含性别词汇的推文数量
+    total_tweet ：int 总的推特数量
+
+方法：
+    modify()：将属性数值进行处理的函数，使之具备可比性
+    find(userinfo，usertype)：查找并返回在usertype属性上值为userinfo的用户对象，目前支持的usertype有id和属性
+    itter():迭代器，迭代返数据库中所有的对象
+
+
+2.推特数据：
+结构：
+    ID ：int唯一标识
+    hashtags ： list：hashtag
+    city ：string城市数据，格式为国家加具体位置
+    user_id ：int 用户标识
+    lat ：float，纬度
+    lon ：float，经度
+方法：
+    find_loc_by_hashtag(hashtag):找到包含指定hashtag的推特并返回推特的地理坐标，初步整理为json易于转换的格式
+    load_in_db(src_path):将文件中的数据存入数据库
+
+网页后端：
+1.推特地理分布图：
+    提供选择hashtag的选项，可以为每一个hashtag保存一个对应的经纬度文件（实例中10^7个点分了很多次（230）加载，这里加载可能要考虑一下加载难度）
+    输入：hashtag：
+    输出：页面/数据文件
+
+2.用户属性，hashtag 地理分布图：
+    提供选择hashtag的选项，提供选择属性的选项可以画热力图
+    对hashtag下的用户的定义：当一个用户的推特hashtag数量排前n的对应的hashtag，将其归在这一hashtag下
+    对用户地理位置的处理：用户本身的地理位置不够精确，而且Gecoding在网上的解析速度太慢
+    所以考虑做以下处理：1.计算用户推特经纬度均值。 2.去除超过经纬度一定范围限度的坐标，再次计算均值，这个方法对纬度是公平的但是对经度则不合适
+
+
+网页前端：
+1.推特地理分布图：
+    用Echarts的GL散点图
+2.用户地理分布图：
+    用Echarts的热力图
+
+
+
+
+
+
+

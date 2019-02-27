@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>用户画像</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href= "https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href={{url_for("static",filename= "dist/css/adminlte.min.css")}}>
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href={{url_for("static" ,filename= "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")}}>
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href={{url_for("Main_Search")}} class="nav-link">主页</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">用户地理分布</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href={{url_for('show_hashtag_lcation',hashtag='all')}} class="nav-link">主题地理分布</a>
+      </li>
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3" method='POST' id="form1">
+	   	{{form.query}}
+		{{form.submit1}}<i>
+      {{form.type}}    </i>
+	</form>
+  </nav>
+</div>
+
+  <!-- /.navbar -->
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href={{url_for("Main_Search")}} class="brand-link">
+      <img src={{url_for("static",filename = "dist/img/twitterlogo.jpg")}} alt="Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">推特用户画像</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+       
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">推特地理位置分布</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">主页</a></li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+ 
+        <div class="row">
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-5 connectedSortable">
+
+            <!-- solid sales graph -->
+            <div class="card bg-info-gradient">
+              <div class="card-header no-border">
+                <h3 class="card-title">
+                  <i class="fa fa-th mr-1"></i>
+                </h3>
+                <div class="card-tools">
+				 <form class="233" method='POST' id="form2">
+					<i>
+					hashtag</i>
+					{{hashtag_form.Hashtag}}
+					{{hashtag_form.submit2}}
+					</form>
+                  <button type="button" class="btn bg-info btn-sm" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="container" style="height: 400px;"></div>
+              </div>
+              <!-- /.card-body -->
+                <!-- /.row -->
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src={{url_for("static",filename = "plugins/jquery/jquery.min.js")}}></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- jQuery ba resize-->
+<script src={{url_for("static",filename = "jquery.ba-resize.min.js")}}></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src={{url_for("static",filename = "plugins/bootstrap/js/bootstrap.bundle.min.js")}}></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src={{url_for("static",filename = "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")}}></script>
+<!-- AdminLTE App -->
+<script src={{url_for("static",filename = "dist/js/adminlte.js")}}></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src={{url_for("static",filename = "dist/js/pages/dashboard.js")}}></script>
+<script src={{url_for("static",filename = "echarts.js")}}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
+<script src="https://img.hcharts.cn/highmaps/highmaps.js"></script>
+<script src={{url_for("static",filename =  "highcharts/world-highres2.js")}}></script>
+<script type="text/javascript">
+	var series = [{
+    // 地图数据列
+    type: 'map',
+    mapData: Highcharts.maps["custom/world-highres2"],
+    joinBy: 'hc-key',
+    name: '随机数据',
+    states: {
+        hover: {
+            color: '#a4edba'
+        }
+    },
+    showInLegend: false
+},{type:"mappoint",
+        name:"tweet_location",
+        data:[]}],
+    lastLevel = null;
+// 中国城市分布数据
+// https://data.jianshukeji.com/geochina/cities.json
+// 这里用 JSONP 跨域访问
+var data = {{data|safe}}
+var data1 = eval(data);
+for(var i in data1){
+	series[1].data.push(data1[i])
+
+}
+console.log(series)
+var map = new Highcharts.Map('container', {
+        chart: {
+            type: 'mappoint'
+        },
+        title: {
+            text: '主题分布'
+        },
+        subtitle: {
+            text: "主题："
+        },
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            floating: true,
+            x: 30
+        },
+        tooltip: {
+            useHTML: true,
+            headerFormat: '<small>{point.key}</small><table>',
+            pointFormat: 
+            '<tr><td>经纬度</td><td>({point.lon:.2f}, {point.lat:.2f})</td></tr>' + 
+            '<tr><td>城市编号</td><td>{point.properties.cityNo}</td></tr>',
+            footerFormat: '</table>',
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: false
+                },
+                marker: {
+                    radius: 3
+                }
+            }
+        },
+        series: series
+    });
+;
+
+</script>
+
+</body>
+</html>

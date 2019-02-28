@@ -1,3 +1,75 @@
 [Mon Nov 19 10:44:53.880361 2018] [wsgi:error] [pid 9612:tid 1388] [client 127.0.0.1:65480] [60.530626999999996, 113.91699700000001, 34.374109, 13.397656999999999, 85.59094499999999]\r, referer: http://localhost:8082/
 [Mon Nov 19 10:45:34.687802 2018] [wsgi:error] [pid 9612:tid 1364] [client 127.0.0.1:49212] [60.530626999999996, 113.91699700000001, 34.374109, 13.397656999999999, 85.59094499999999]\r, referer: http://localhost:8082/
 [Mon Nov 19 10:45:48.171782 2018] [wsgi:error] [pid 9612:tid 1388] [client 127.0.0.1:49247] [60.530626999999996, 113.91699700000001, 34.374109, 13.397656999999999, 85.59094499999999]\r, referer: http://localhost:8082/
+[Mon Feb 25 14:07:52.266733 2019] [wsgi:error] [pid 12160:tid 1368] [client 127.0.0.1:60167] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 14:07:52.267229 2019] [wsgi:error] [pid 12160:tid 1352] [client 127.0.0.1:60209] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 14:31:44.901034 2019] [wsgi:error] [pid 12160:tid 1392] [client 127.0.0.1:61635] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 14:59:21.393979 2019] [wsgi:error] [pid 12160:tid 1340] [client 127.0.0.1:63715] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 15:45:11.971401 2019] [wsgi:error] [pid 12160:tid 1340] [client 127.0.0.1:49956] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 15:45:31.085154 2019] [wsgi:error] [pid 12160:tid 1340] [client 127.0.0.1:49977] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 16:00:06.159976 2019] [wsgi:error] [pid 12160:tid 1348] [client 127.0.0.1:50771] 12\r, referer: http://47.102.128.4:8082/
+[Mon Feb 25 16:09:53.391616 2019] [wsgi:error] [pid 12160:tid 1376] [client 127.0.0.1:51323] 12\r, referer: http://47.102.128.4:8082/
+[Thu Feb 28 12:15:53.491654 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899] [2019-02-28 12:15:53,445] ERROR in app: Exception on /tweet/id/12 [GET]\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899] Traceback (most recent call last):\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 2292, in wsgi_app\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     response = self.full_dispatch_request()\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1815, in full_dispatch_request\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     rv = self.handle_user_exception(e)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1718, in handle_user_exception\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     reraise(exc_type, exc_value, tb)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\flask\\_compat.py", line 35, in reraise\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     raise value\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1813, in full_dispatch_request\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.504550 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     rv = self.dispatch_request()\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1799, in dispatch_request\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     return self.view_functions[rule.endpoint](**req.view_args)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "E:/tweet\\run.py", line 53, in ShowUser\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     user = TUser.find(usertype, userinfo)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "E:/tweet\\LoadInDB.py", line 71, in find\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     if user:\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 211, in __bool__\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     return self._has_data()\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 207, in _has_data\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     return False if queryset.first() is None else True\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 294, in first\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     result = queryset[0]\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 196, in __getitem__\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     only_fields=self.only_fields\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\mongoengine\\base\\document.py", line 723, in _from_son\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     obj = cls(__auto_convert=False, _created=created, __only_fields=only_fields, **data)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]   File "d:\\python37\\lib\\site-packages\\mongoengine\\base\\document.py", line 78, in __init__\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.512982 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899]     raise FieldDoesNotExist(msg)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.513477 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899] mongoengine.errors.FieldDoesNotExist: The fields "{'screen_name'}" do not exist on the document "TUser", referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:15:53.513477 2019] [wsgi:error] [pid 6024:tid 1376] [client 127.0.0.1:57899] \r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953] [2019-02-28 12:18:54,230] ERROR in app: Exception on /tweet/id/12 [GET]\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953] Traceback (most recent call last):\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 2292, in wsgi_app\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     response = self.full_dispatch_request()\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1815, in full_dispatch_request\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     rv = self.handle_user_exception(e)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1718, in handle_user_exception\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     reraise(exc_type, exc_value, tb)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\flask\\_compat.py", line 35, in reraise\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     raise value\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1813, in full_dispatch_request\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     rv = self.dispatch_request()\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\flask\\app.py", line 1799, in dispatch_request\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     return self.view_functions[rule.endpoint](**req.view_args)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "E:/tweet\\run.py", line 53, in ShowUser\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     user = TUser.find(usertype, userinfo)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "E:/tweet\\LoadInDB.py", line 71, in find\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     if user:\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 211, in __bool__\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     return self._has_data()\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 207, in _has_data\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     return False if queryset.first() is None else True\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 294, in first\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     result = queryset[0]\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\mongoengine\\queryset\\base.py", line 196, in __getitem__\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     only_fields=self.only_fields\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\mongoengine\\base\\document.py", line 723, in _from_son\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     obj = cls(__auto_convert=False, _created=created, __only_fields=only_fields, **data)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]   File "d:\\python37\\lib\\site-packages\\mongoengine\\base\\document.py", line 78, in __init__\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953]     raise FieldDoesNotExist(msg)\r, referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953] mongoengine.errors.FieldDoesNotExist: The fields "{'screen_name'}" do not exist on the document "TUser", referer: http://www.bhyang.cn:8082/tweet/all
+[Thu Feb 28 12:18:54.231308 2019] [wsgi:error] [pid 6024:tid 1372] [client 127.0.0.1:57953] \r, referer: http://www.bhyang.cn:8082/tweet/all

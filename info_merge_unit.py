@@ -1,17 +1,27 @@
 import os
 import shutil
 from info_parse import save_user, save_tweet
+null = None
+true = True
+true = True
 
-#用户信息读取
+
+# 用户信息读取
 def read_info(src_path):
+    print(src_path)
     if os.path.exists(src_path):
-        with open(src_path,'r') as f:
+        with open(src_path, 'r', encoding='utf-8') as f:
             for i in f:
                 try:
-                    i = eval(i)
+                    i = eval(i[:-1])
                 except:
-                    raise ValueError
+                    print(i)
+                    continue
                 yield i
+        print('read over' + src_path)
+    return
+
+
 # 合并用户信息
 def add_user_info(user, users):
     user_id = user['user_id']
@@ -26,18 +36,21 @@ def add_user_info(user, users):
     for i in range(len(user['character'])):
         users[user_id]['character'][i] += user['character'][i]
     users[user_id]['character_tweet'] += user['character_tweet']
-
-    if user['location'] not in users[user_id]['location']:
-        users[user_id]['location'].append(user['location'])
-    if user['name'] not in users[user_id]['name']:
-        users[user_id]['name'].append(user['name'])
+    for loc in user['location']:
+        if loc not in users[user_id]['location']:
+            users[user_id]['location'].append(user['location'])
+    if user['name'] != users[user_id]['name']:
+        users[user_id]['name']= user['name']
 
     users[user_id]['gender'] += user['gender']
     users[user_id]['gender_tweet'] += user['gender_tweet']
     users[user_id]['total_tweet'] += 1
+    return users
 
-#用户信息合并
+
+# 用户信息合并
 def merge_user(src_path_list, dst_path):
+    print(src_path_list)
     users = {}
     for src_path in src_path_list:
         for user in read_info(src_path):
@@ -46,13 +59,13 @@ def merge_user(src_path_list, dst_path):
                 if user_id not in users:
                     users[user_id] = user
                 else:
-                    add_user_info(user,users)
+                    users = add_user_info(user, users)
             else:
                 continue
     save_user(dst_path, users)
 
 
-#推特信息合并
+# 推特信息合并
 def merge_tweet(src_path_list, dst_path):
     tweets = []
     for src_path in src_path_list:
@@ -60,3 +73,9 @@ def merge_tweet(src_path_list, dst_path):
             if tweet:
                 tweets.append(tweet)
     save_tweet(dst_path, tweets)
+
+
+if __name__ == '__main__':
+    src_path_list = ['E:\\data\\data2_0\\0', 'E:\\data\\data2_0\\1', 'E:\\data\\data2_0\\2']
+    dst_path = "E:\\0"
+    merge_user(src_path_list, dst_path)

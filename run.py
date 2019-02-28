@@ -26,19 +26,21 @@ app.secret_key = 's12saf123f'
 WTF_CSRF_ENABLED = False
 WTF_CSRF_CHECK_DEFAULT = False
 
+
 class SearchForm(Form):
-    query = StringField(label='查询', validators = [DataRequired('请输入用户id')])
+    query = StringField(label='查询', validators=[DataRequired('请输入用户id')])
     type = SelectField('查询类型', [DataRequired()], default='id', choices=[('name', '按姓名'), ('id', '按id')], render_kw={})
     submit1 = SubmitField('查找')
 
+
 class HashtagChoser(Form):
-    Hashtag = SelectField('hashtag',[DataRequired()])
+    Hashtag = SelectField('hashtag', [DataRequired()])
     submit2 = SubmitField('change')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def Main_Search(status=""):
     search_form = SearchForm(request.form)
-    query = ''
     if search_form.validate():
         query = search_form.query.data
         return redirect(url_for('ShowUser', usertype=search_form.type.data, userinfo=query))
@@ -48,24 +50,25 @@ def Main_Search(status=""):
 @app.route('/tweet/<usertype>/<userinfo>', methods=['GET', 'POST'])
 def ShowUser(usertype, userinfo):
     search_form = SearchForm()
-    user, user_list = TUser.find(usertype, userinfo)
+    user = TUser.find(usertype, userinfo)
     # 转化为dict再转化为json格式，以便传参给js
     if search_form.validate():
         query = search_form.query.data
         return redirect(url_for('ShowUser', usertype=search_form.type.data, userinfo=query))
-    print(user)
     if user:
-        return render_template('user.html', user=user, user_list=user_list, form=search_form)
+        return render_template('user.html', user=user, form=search_form)
     else:
         return redirect(url_for('Main_Search', status="No such User"))
 
 #        return "no user"
+
 
 # 统计某类hashtag中的人的相关属性的分布
 @app.route('/tweet/hashtag/<hashtag>')
 def show_hashTag(hashtag):
     
     return
+
 
 # 获取所有的用户地理位置列表
 def get_locations():
@@ -74,33 +77,36 @@ def get_locations():
         locations.append(user.location)
     return locations
 
+
 # 显示人地理位置分布
 @app.route('/tweet/location')
 def show_location():
     # 将地理位置取出传给模板
     locations = get_locations()
-    return render_template('location.html', location_list = locations)
+    return render_template('location.html', location_list=locations)
 
 
-#获得所有hashtag
+# 获得所有hashtag
 def get_hashtags():
-    return [('isis','isis'),('#terrorism','#terrorism'),('#saudi','#saudi')]
+    return [('#isis', '#isis'), ('#terrorism', '#terrorism'), ('#saudi', '#saudi'), ('all', 'all')]
 
-@app.route('/tweet/<hashtag>', methods=["GET","POST"])
-def show_hashtag_lcation(hashtag = 'all'):
+
+@app.route('/tweet/<hashtag>', methods=["GET", "POST"])
+def show_hashtag_location(hashtag='all'):
     tweet_db = Tweet_Info()
     locations = tweet_db.find_loc_by_hashtag(hashtag)
-    hashtag_form = HashtagChoser()
-    search_form = SearchForm()
-    
+    search_form = SearchForm(request.form)
+    hashtag_form = HashtagChoser(request.form)
     hashtag_form.Hashtag.choices = get_hashtags()
+    # print(search_form.submit1.data)
+    # print(search_form.query.data)
     if search_form.validate():
         query = search_form.query.data
         return redirect(url_for('ShowUser', usertype=search_form.type.data, userinfo=query))
-    if hashtag_form.validate():
-        hashtag = hashtag_form.Hashtag.data
-        return render_template('location.html',form=search_form,hashtag=hashtag, hashtag_form= hashtag_form,data=locations)
-    return render_template('location.html',form=search_form,hashtag=hashtag, hashtag_form= hashtag_form,data=locations)
+    if hashtag_form.submit2.data and hashtag_form.validate():
+        return redirect(url_for('show_hashtag_location', hashtag=hashtag_form.Hashtag.data))
+    return render_template('location.html', form=search_form, hashtag=hashtag, hashtag_form=hashtag_form, data=locations)
+
 
 if __name__ == '__main__':
     app.debug = True

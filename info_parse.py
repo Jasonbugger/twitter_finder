@@ -1,22 +1,21 @@
-#用户数据统计
-from users_stat import Read_tweet
-import sys
-import time
+# 用户数据统计
+from users_stat import read_tweet
 import json
 import os
+import datetime
 
 # 从内容中获取用户位置
 def user_location_get(content):
     if 'geo_enabled' in content['user'] and 'location' in content['user'] and content['user']['geo_enabled']:
         location = content['user']['location']
-        # name = content['user']['name']
-        return location
-    return None
+        return [location]
+    return []
+
 
 # 从内容汇总获取推特位置
 def tweet_location_get(content):
     if 'geo' in content:
-        location = content['geo']['coordinates'] if content['geo']['type']=='point' else content['geo']['coordinates'][0]
+        location = content['geo']['coordinates'] if content['geo']['type'] == 'point' else content['geo']['coordinates'][0]
     elif 'coordinates' in content:
         location = content['coordinates']['coordinates'] if content['coordinates']['type'] == \
                                                             'point' else content['coordinates']['coordinates'][0]
@@ -28,20 +27,23 @@ def tweet_location_get(content):
         location = []
     return location
 
+
 # 获取推特城市位置
 def tweet_city_get(content):
     if 'place' in content:
-        city = content['place']['country']+content['place']['full_name']
+        city = content['place']['country']+"|"+content['place']['full_name']
     return city
 
-# 判断某条内容是否有hashtag并返回
+
+# 判断某条内容是否有hashtag
 def has_hashtag(content):
     if content['hashtags']:
         return content['hashtags']
-    return []
+    return False
 
-#推特位置信息和hashtag获取
-def parse_hashtag_and_loc(content:dict):
+
+# 推特位置信息和hashtag获取
+def parse_hashtag_and_loc(content: dict):
     if content['lang'] != 'en':
         return None
     tweet = {}
@@ -56,15 +58,16 @@ def parse_hashtag_and_loc(content:dict):
         tweet['user_id'] = content['user']['id']
     return tweet
 
-#用户信息获取
-def parse_user_info(content:dict):
+
+# 用户信息收集
+def parse_user_info(content: dict):
     if content['lang'] != 'en':
         return None
     age = content['age'] if 'age' in content else [0]*4
     gender = content['gender'] if 'gender' in content else [0]
     user_id = content['user']['id'] if 'user' in content and 'id' in content['user'] else 0
     name = content['user']['name'] if 'user' in content and 'name' \
-                                                            in content['user'] else ['']
+                                                            in content['user'] else ""
     emotion = content['emotion'] if 'emotion' in content else [0]*10
     character = content['character'] if 'character' in content else [0]*5
     location = user_location_get(content)
@@ -83,47 +86,62 @@ def parse_user_info(content:dict):
     age = temp
     if sum(emotion):
         emotion_tweet = 1
+    #                    a = abs(sum(emotion))
+    #                    for i in range(len(emotion)):
+    #                        emotion[i] /= a
     if sum(character):
         character_tweet = 1
+    #                    a = abs(sum(character))
+    #                    for i in range(len(character)):
+    #                            character[i] /= a
     if sum(age):
         age_tweet = 1
+    #                    a = abs(sum(age))
+    #                    for i in range(len(age)):
+    #                        age[i] /= a
     if gender:
         gender_tweet = 1
 
     user = {'user_id': user_id, 'age': age, 'gender': gender, 'name': name,
                 'emotion': emotion, 'location': location, 'character': character, 'emotion_tweet': emotion_tweet,
-                'character_tweet': character_tweet, 'age_tweet': age_tweet, 'gender_tweet': gender_tweet}
+                'character_tweet': character_tweet, 'age_tweet': age_tweet, 'gender_tweet': gender_tweet, 'total_tweet': 1}
     return user
+
 
 # 储存用户信息
 def save_user(path: str, users: dict):
     if not os.path.exists(os.path.dirname(path)):
         os.makedirs(os.path.dirname(path))
-    with open(path, 'w', encoding = 'utf-8') as f:
+        print('dir has made')
+    with open(path, 'w', encoding='utf-8') as f:
         for i in users:
             temp = users[i]
-            json.dump(temp, f, ensure_ascii=False)
-            f.write('\n')
+            try:
+                f.write(str(temp))
+                f.write('\n')
+            except:
+                print(temp)
+
 
 # 储存推特内容
 def save_tweet(path: str, tweets: list):
     with open(path, 'w', encoding = 'utf-8') as f:
         for i in tweets:
-            assert type(i) == type({})
+            assert type(i)==type({})
             json.dump(i, f, ensure_ascii=False)
             f.write('\n')
 
 
+# 基本并行单元:获取推文基本信息
+def tweet_info_get(src_path: str, dst_path: str):
 
-#基本并行单元:获取推文基本信息
-def tweet_info_get(src_path:str,dst_path:str):
     if not os.path.exists(src_path):
         print("no such file"+src_path)
-        return 
+        return
     tweet = []
     if not os.path.exists(os.path.dirname(dst_path)):
         os.makedirs(os.path.dirname)
-    for content in Read_tweet(src_path, dst_path):
+    for content in read_tweet(src_path, dst_path):
         try:
             info = parse_hashtag_and_loc(content)
         except:
@@ -133,19 +151,20 @@ def tweet_info_get(src_path:str,dst_path:str):
     save_tweet(dst_path, tweet)
 
 
-#基本并行单元：获取用户信息
-def user_info_get(src_path:str, dst_path:str):
+# 基本并行单元：获取用户信息
+def user_info_get(src_path: str, dst_path: str):
+    start_time = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     if not os.path.exists(src_path):
         print("no such file"+src_path)
-        return 
+        return
     users = {}
     if not os.path.exists(os.path.dirname(dst_path)):
-        os.makedirs(os.path.dirname)
-    for content in Read_tweet(src_path, dst_path):
+        os.makedirs(os.path.dirname(dst_path))
+    for content in read_tweet(src_path, dst_path):
         try:
             user = parse_user_info(content)
         except:
-            continue
+            raise ValueError
         if user:
             user_id = user['user_id']
             if user_id not in users:
@@ -162,15 +181,23 @@ def user_info_get(src_path:str, dst_path:str):
                     for i in range(len(user['character'])):
                         users[user_id]['character'][i] += user['character'][i]
                     users[user_id]['character_tweet'] += user['character_tweet']
-
-                    if user['location'] not in users[user_id]['location']:
-                        users[user_id]['location'].append(user['location'])
-                    if user['name'] not in users[user_id]['name']:
-                        users[user_id]['name'].append(user['name'])
+                    for loc in user['location']:
+                        if loc not in users[user_id]['location']:
+                            users[user_id]['location'].append(user['location'])
 
                     users[user_id]['gender'] += user['gender']
                     users[user_id]['gender_tweet'] += user['gender_tweet']
                     users[user_id]['total_tweet'] += 1
         else:
             continue
-    save_user(dst_path,users)
+    save_user(dst_path, users)
+    end_time = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
+    print(src_path+"read over")
+    print("start at " + str(start_time))
+    print("end at " + str(end_time))
+
+
+if __name__ == '__main__':
+    src = "F:\\user_profiles\\data2_1\\0"
+    dst = "E:\\0"
+    user_info_get(src, dst)

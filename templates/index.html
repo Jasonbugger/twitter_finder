@@ -10,9 +10,9 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href= "https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href={{url_for("static",filename= "dist/css/adminlte.min.css")}}>
+  <link rel="stylesheet" href={{url_for("static",filename="dist/css/adminlte.min.css")}}>
   <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href={{url_for("static" ,filename= "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")}}>
+  <link rel="stylesheet" href={{url_for("static",filename="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")}}>
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -30,7 +30,7 @@
         <a href="#" class="nav-link">用户地理分布</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href={{url_for('show_hashtag_lcation',hashtag='all')}} class="nav-link">主题地理分布</a>
+        <a href={{url_for('show_hashtag_location',hashtag='all')}} class="nav-link">主题地理分布</a>
       </li>
     </ul>
     <!-- SEARCH FORM -->
@@ -45,7 +45,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href={{url_for("Main_Search")}} class="brand-link">
-      <img src={{url_for("static",filename = "dist/img/twitterlogo.jpg")}} alt="Logo" class="brand-image img-circle elevation-3"
+      <img src={{url_for("static",filename="dist/img/twitterlogo.jpg")}} alt="Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">推特用户画像</span>
     </a>
@@ -99,22 +99,22 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src={{url_for("static",filename = "plugins/jquery/jquery.min.js")}}></script>
+<script src={{url_for("static",filename="plugins/jquery/jquery.min.js")}}></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- jQuery ba resize-->
-<script src={{url_for("static",filename = "jquery.ba-resize.min.js")}}></script>
+<script src={{url_for("static",filename="jquery.ba-resize.min.js")}}></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src={{url_for("static",filename = "plugins/bootstrap/js/bootstrap.bundle.min.js")}}></script>
+<script src={{url_for("static",filename="plugins/bootstrap/js/bootstrap.bundle.min.js")}}></script>
 <!-- Bootstrap WYSIHTML5 -->
-<script src={{url_for("static",filename = "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")}}></script>
+<script src={{url_for("static",filename="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")}}></script>
 <!-- AdminLTE App -->
-<script src={{url_for("static",filename = "dist/js/adminlte.js")}}></script>
+<script src={{url_for("static",filename="dist/js/adminlte.js")}}></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src={{url_for("static",filename = "dist/js/pages/dashboard.js")}}></script>
+<script src={{url_for("static",filename="dist/js/pages/dashboard.js")}}></script>
 </body>
 </html>

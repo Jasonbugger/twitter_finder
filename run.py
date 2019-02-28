@@ -11,7 +11,7 @@ import math
 from LoadInDB import TUser
 from LoadInDB import Tweet_Info
 
-sys.path.append(r'E:\tweet')
+sys.path.append(r'E:\twitter_finder')
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 app.config['MONGODB_SETTINGS'] = {
@@ -66,24 +66,19 @@ def ShowUser(usertype, userinfo):
 # 统计某类hashtag中的人的相关属性的分布
 @app.route('/tweet/hashtag/<hashtag>')
 def show_hashTag(hashtag):
-    
+
     return
 
 
-# 获取所有的用户地理位置列表
-def get_locations():
-    locations = []
-    for user in TUser.itter():
-        locations.append(user.location)
-    return locations
-
-
 # 显示人地理位置分布
-@app.route('/tweet/location')
-def show_location():
-    # 将地理位置取出传给模板
-    locations = get_locations()
-    return render_template('location.html', location_list=locations)
+@app.route('/user/location/<hashtag>')
+def show_user_location(hashtag='all'):
+    users = TUser()
+    locations = users.find_loc_by_hashtag(hashtag)
+    search_form = SearchForm(request.form)
+    hashtag_form = HashtagChoser(request.form)
+    hashtag_form.Hashtag.choices = get_hashtags()
+    return render_template('user_hashtag_loc.html', form=search_form, hashtag=hashtag, hashtag_form=hashtag_form, data=locations)
 
 
 # 获得所有hashtag

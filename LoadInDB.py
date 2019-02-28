@@ -83,6 +83,20 @@ class TUser(Document):
         for i in TUser.objects.all():
             yield i
 
+    def find_loc_by_hashtag(self, hashtag):
+        tag = 1
+        if tag == 1:
+            loc = []
+            for i in range(1000000):
+                loc.append([random.random() * 360 - 180, random.random() * 160 - 80])
+        else:
+            loc = []
+            for i in self.objects(hashtags=hashtag):
+                loc.append(i.lon)
+                loc.append(i.lat)
+        return loc
+
+
 class Tweet_Info(Document):
     ID = IntField(required=True, unique=True)
     hashtags = ListField(StringField(max_length=50),max_length=20)
@@ -96,14 +110,15 @@ class Tweet_Info(Document):
 
     def __str__(self):
         return str(self.ID) + "\n\t"+str(self.hashtags)+"\n\t"+self.city+"\n\t"+str(self.X)+","+str(self.Y)
-    #整理成json格式
+
+    # 整理成json格式
     def find_loc_by_hashtag(self, hashtag):
         tag = 1
         # 测试模块
         if tag == 1:
             loc = []
             for i in range(100):
-                loc.append([random.random()*360-180,random.random()*160-80])
+                loc.append([random.random()*360-180, random.random()*160-80,random.randint(1, 10)])
             
         else:
             loc = []

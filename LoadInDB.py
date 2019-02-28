@@ -101,15 +101,17 @@ class Tweet_Info(Document):
         tag = 1
         # 测试模块
         if tag == 1:
-            array = {}
             loc = []
             for i in range(100):
-                loc.append({'name': random.randint(1,100),'lon':random.random()*360-180,'lat':random.random()*160-80})
+                loc.append([random.random()*360-180,random.random()*160-80])
+            
         else:
+            loc = []
             for i in self.objects(hashtags = hashtag):
-                x = 1
-        loc = str(loc).replace("\'","")
+                loc.append(i.lon)
+                loc.append(i.lat)
         return loc
+
 
 # 写入用户数据
 def load_user_in_DB(src_path):

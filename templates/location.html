@@ -108,7 +108,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <div id="container" style="height: 800px;"></div>
+                <div id="charts" style="height: 500px;"></div>
               </div>
               <!-- /.card-body -->
               <!-- /.card-footer -->
@@ -142,6 +142,8 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
+<script src="//cdn.bootcss.com/echarts/3.2.0/extension/bmap.min.js"></script>
+<script src="https://api.map.baidu.com/api?v=2.0&ak=mRSskfEb6v7RsPU2edVYIEY60r6gOUYu"></script>
 <!-- Bootstrap 4 -->
 <script src={{url_for("static",filename="plugins/bootstrap/js/bootstrap.bundle.min.js")}}></script>
 <!-- Bootstrap WYSIHTML5 -->
@@ -151,79 +153,162 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src={{url_for("static",filename="dist/js/pages/dashboard.js")}}></script>
 <script src={{url_for("static",filename="echarts.js")}}></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
-<script src="https://img.hcharts.cn/highmaps/highmaps.js"></script>
-<script src={{url_for("static",filename="highcharts/world-highres2.js")}}></script>
+<script src={{url_for("static",filename="bmap.js")}}></script>
 <script type="text/javascript">
-	var series = [{
-    // 地图数据列
-    type: 'map',
-    mapData: Highcharts.maps["custom/world-highres2"],
-    joinBy: 'hc-key',
-    name: '随机数据',
-    states: {
-        hover: {
-            color: '#a4edba'
+  option = {
+      title: {
+          text: 'hashtag:{{Hashtag}}',
+              left: 'center',
+          textStyle: {
+              color: '#000000'
+          }
+      },
+      bmap: {
+        center: [-2.114129, 37.550339],
+        zoom: 1,
+        roam: true,
+        mapStyle: {
+            styleJson: [
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#044161"
+                        }
+                    },
+                    {
+                        "featureType": "land",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "boundary",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#064f85"
+                        }
+                    },
+                    {
+                        "featureType": "railway",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#005b96",
+                            "lightness": 1
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "labels",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#00508b"
+                        }
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "green",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#056197",
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "subway",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "manmade",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "local",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "labels",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "boundary",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#029fd4"
+                        }
+                    },
+                    {
+                        "featureType": "building",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#1a5787"
+                        }
+                    },
+                    {
+                        "featureType": "label",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    }
+            ]
         }
     },
-    showInLegend: false
-},{type:"mappoint",
-        name:"tweet_location",
-        data:[]}],
-    lastLevel = null;
-// 中国城市分布数据
-// https://data.jianshukeji.com/geochina/cities.json
-// 这里用 JSONP 跨域访问
-var data = {{data|safe}}
-var data1 = eval(data);
-for(var i in data1){
-	series[1].data.push(data1[i])
-}
+    series:{
+        type: "scatter",
+        coordinateSystem: 'bmap',
+        data:{{data}}
+    }
+};
 
-console.log(series)
-var map = new Highcharts.Map('container', {
-        chart: {
-            type: 'mappoint'
-        },
-        title: {
-            text: '主题分布'
-        },
-        subtitle: {
-            text: "主题："
-        },
-        mapNavigation: {
-            enabled: true,
-            buttonOptions: {
-                verticalAlign: 'bottom'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            floating: true,
-            x: 30
-        },
-        tooltip: {
-            useHTML: true,
-            headerFormat: '<small>{point.key}</small><table>',
-            pointFormat: 
-            '<tr><td>经纬度</td><td>({point.lon:.2f}, {point.lat:.2f})</td></tr>' + 
-            '<tr><td>城市编号</td><td>{point.properties.cityNo}</td></tr>',
-            footerFormat: '</table>',
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: false
-                },
-                marker: {
-                    radius: 3
-                }
-            }
-        },
-        series: series
-    });
-;
+    var tweet_location_chart = echarts.init(document.getElementById('charts'))
+    tweet_location_chart.setOption(option)
 
 </script>
 

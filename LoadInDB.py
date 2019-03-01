@@ -5,6 +5,7 @@ import random
 import json
 connect('tweet', host='localhost', port=27017)
 
+
 # 定义表项
 class TUser(Document):
     ID = IntField(required=True, unique=True)
@@ -13,23 +14,7 @@ class TUser(Document):
     age = ListField(FloatField())
     gender = FloatField()
     emotion = ListField(FloatField())
-    # emotion_positive = IntField()
-    # emotion_negative = IntField()
-    # emotion_anger = IntField()
-    # emotion_anticipation = IntField()
-    # emotion_disgust = IntField()
-    # emotion_fear = IntField()
-    # emotion_joy = IntField()
-    # emotion_sadness = IntField()
-    # emotion_surprise = IntField()
-    # emotion_trust = IntField()
     character = ListField(FloatField())
-
-    # character_A = FloatField()
-    # character_C = FloatField()
-    # character_E = FloatField()
-    # character_N = FloatField()
-    # character_O = FloatField()
     emotion_tweet = IntField()
     character_tweet = IntField()
     age_tweet = IntField()
@@ -83,20 +68,6 @@ class TUser(Document):
         for i in TUser.objects.all():
             yield i
 
-    def find_loc_by_hashtag(self, hashtag):
-        tag = 1
-        if tag == 1:
-            loc = []
-            for i in range(1000000):
-                loc.append([random.random() * 360 - 180, random.random() * 160 - 80])
-        else:
-            loc = []
-            for i in self.objects(hashtags=hashtag):
-                loc.append(i.lon)
-                loc.append(i.lat)
-        return loc
-
-
 class Tweet_Info(Document):
     ID = IntField(required=True, unique=True)
     hashtags = ListField(StringField(max_length=50),max_length=20)
@@ -110,21 +81,19 @@ class Tweet_Info(Document):
 
     def __str__(self):
         return str(self.ID) + "\n\t"+str(self.hashtags)+"\n\t"+self.city+"\n\t"+str(self.X)+","+str(self.Y)
-
-    # 整理成json格式
+    #整理成json格式
     def find_loc_by_hashtag(self, hashtag):
         tag = 1
         # 测试模块
         if tag == 1:
+            array = {}
             loc = []
             for i in range(100):
-                loc.append([random.random()*360-180, random.random()*160-80,random.randint(1, 10)])
-            
+                loc.append({'name': random.randint(1,100),'lon':random.random()*360-180,'lat':random.random()*160-80})
         else:
-            loc = []
             for i in self.objects(hashtags = hashtag):
-                loc.append(i.lon)
-                loc.append(i.lat)
+                x = 1
+        loc = str(loc).replace("\'","")
         return loc
 
 
@@ -135,22 +104,27 @@ def load_user_in_DB(src_path):
             a = a[:-1]
             try:
                 a = eval(a)
+                print(a)
             except:
                 print('not a dict')
                 continue
-            user_id = [x for x in a][0]
+            user_id = a['user_id']
             user = TUser(ID=user_id,
-                        name=a[user_id]['name'] if a[user_id]['name'] != [['']] else ["NoName"],
-                        location=a[user_id]['location'] if a[user_id]['location'] else ["NoLocation"],
-                        age=a[user_id]['age'],
-                        gender=a[user_id]['gender'],
-                        emotion=a[user_id]['emotion'],
-                        character=a[user_id]['character'],
-                        age_tweet=a[user_id]['age_tweet'],
-                        gender_tweet=a[user_id]['gender_tweet'],
-                        emotion_tweet=a[user_id]['emotion_tweet'],
-                        character_tweet=a[user_id]['character_tweet'],
-                        total_tweet=a[user_id]['total_tweet'])
+                        name=a['name'],
+                        location=a['location'],
+                        age=a['age'],
+                        gender=a['gender'],
+                        emotion=a['emotion'],
+                        character=a['character'],
+                        age_tweet=a['age_tweet'],
+                        gender_tweet=a['gender_tweet'],
+                        emotion_tweet=a['emotion_tweet'],
+                        character_tweet=a['character_tweet'],
+                        total_tweet=a['total_tweet'])
 
             print(user_id)
             user.save()
+
+
+if __name__ == "__main__":
+    load_user_in_DB("E:\\final_user_data\\0")

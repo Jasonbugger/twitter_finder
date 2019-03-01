@@ -3,12 +3,12 @@ import shutil
 from info_parse import save_user, save_tweet
 null = None
 true = True
-true = True
+
 
 
 # 用户信息读取
 def read_info(src_path):
-    print(src_path)
+    print(src_path+"start read")
     if os.path.exists(src_path):
         with open(src_path, 'r', encoding='utf-8') as f:
             for i in f:
@@ -40,7 +40,7 @@ def add_user_info(user, users):
         if loc not in users[user_id]['location']:
             users[user_id]['location'].append(loc)
     if user['name'] != users[user_id]['name']:
-        users[user_id]['name']= user['name']
+        users[user_id]['name'] = user['name']
 
     users[user_id]['gender'] += user['gender']
     users[user_id]['gender_tweet'] += user['gender_tweet']
@@ -50,7 +50,6 @@ def add_user_info(user, users):
 
 # 用户信息合并
 def merge_user(src_path_list, dst_path):
-    print(src_path_list)
     users = {}
     for src_path in src_path_list:
         for user in read_info(src_path):

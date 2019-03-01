@@ -2,9 +2,9 @@ import os
 from multiprocessing import Pool
 import shutil
 import copy
-from info_parse import user_info_get, tweet_location_get
+from info_parse import user_info_get, tweet_info_get
 from info_merge_unit import merge_user
-
+from info_merge_unit import merge_tweet
 
 # 源文件路径获取单元
 def source_path_getter(root_path):
@@ -107,6 +107,6 @@ if __name__ == '__main__':
     dst_root_path = "E:\\data"
     process_number = 8
     final_path = "E:\\final_data"
-    program_to_run = user_info_get
-    merge_func = merge_user
+    program_to_run = tweet_info_get
+    merge_func = merge_tweet
     main(source_root_path, dst_root_path, process_number, final_path, program_to_run, merge_func)

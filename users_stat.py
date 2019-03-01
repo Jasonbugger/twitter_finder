@@ -16,7 +16,7 @@ def is_dict(text):
 
 def read_tweet(src_path, dst_path):
     if os.path.exists(dst_path):
-        print("skip", str(src_path))
+        print(dst_path + "exist ,skip", str(src_path))
         return None
     f = open(src_path, 'r', encoding='utf-8')
     while True:

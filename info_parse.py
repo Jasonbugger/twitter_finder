@@ -15,23 +15,28 @@ def user_location_get(content):
 # 从内容汇总获取推特位置
 def tweet_location_get(content):
     if 'geo' in content:
-        location = content['geo']['coordinates'] if content['geo']['type'] == 'point' else content['geo']['coordinates'][0]
+        geo = content['geo']['coordinates']
+        location = [geo[1], geo[0]] if content['geo']['type'] == 'point' else geo[0][0]
     elif 'coordinates' in content:
-        location = content['coordinates']['coordinates'] if content['coordinates']['type'] == \
-                                                            'point' else content['coordinates']['coordinates'][0]
+        geo = content['coordinates']['coordinates']
+        location = [geo[1], geo[0]] if content['coordinates']['type'] == 'point' else geo[0][0]
     elif 'place' in content:
         temp = content['place']
-        location = temp['bounding_box']['coordinates'] if temp['bounding_box']['type'] == \
-                                                          'point' else temp['bounding_box']['coordinates'][0]
+        try:
+            geo = temp['bounding_box']['coordinates']
+        except:
+            return [181, 91]
+        location = [geo[1], geo[0]] if temp['bounding_box']['type'] == 'point' else geo[0][0]
     else:
-        location = []
+        location = [181, 91]
     return location
 
 
 # 获取推特城市位置
 def tweet_city_get(content):
+    city = ""
     if 'place' in content:
-        city = content['place']['country']+"|"+content['place']['full_name']
+        city = content['place']['country']+","+content['place']['full_name']
     return city
 
 
@@ -39,23 +44,20 @@ def tweet_city_get(content):
 def has_hashtag(content):
     if content['hashtags']:
         return content['hashtags']
-    return False
+    return []
 
 
 # 推特位置信息和hashtag获取
 def parse_hashtag_and_loc(content: dict):
-    if content['lang'] != 'en':
-        return None
     tweet = {}
     hashtag = has_hashtag(content)
-    if hashtag:
-        location = tweet_location_get(content)
-        city = tweet_city_get(content)
-        tweet['id'] = content['id']
-        tweet['location'] = location
-        tweet['city'] = city
-        tweet['hashtags'] = hashtag
-        tweet['user_id'] = content['user']['id']
+    location = tweet_location_get(content)
+    city = tweet_city_get(content)
+    tweet['id'] = content['id']
+    tweet['location'] = location
+    tweet['city'] = city
+    tweet['hashtags'] = hashtag
+    tweet['user_id'] = content['user']['id']
     return tweet
 
 
@@ -125,16 +127,17 @@ def save_user(path: str, users: dict):
 
 # 储存推特内容
 def save_tweet(path: str, tweets: list):
-    with open(path, 'w', encoding = 'utf-8') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         for i in tweets:
-            assert type(i)==type({})
-            json.dump(i, f, ensure_ascii=False)
-            f.write('\n')
+            try:
+                f.write(str(i))
+                f.write('\n')
+            except:
+                print(i)
 
 
 # 基本并行单元:获取推文基本信息
 def tweet_info_get(src_path: str, dst_path: str):
-
     if not os.path.exists(src_path):
         print("no such file"+src_path)
         return
@@ -198,6 +201,6 @@ def user_info_get(src_path: str, dst_path: str):
 
 
 if __name__ == '__main__':
-    src = "F:\\user_profiles\\data2_1\\0"
+    src = "F:\\user_profiles\\data4_35\\0"
     dst = "E:\\0"
-    user_info_get(src, dst)
+    tweet_info_get(src, dst)

@@ -16,17 +16,17 @@ def user_location_get(content):
 def tweet_location_get(content):
     if 'geo' in content:
         geo = content['geo']['coordinates']
-        location = [geo[1], geo[0]] if content['geo']['type'] == 'point' else geo[0][0]
+        location = [geo[0][1], geo[0][0]] if content['geo']['type'] == 'point' else geo[0][0]
     elif 'coordinates' in content:
         geo = content['coordinates']['coordinates']
-        location = [geo[1], geo[0]] if content['coordinates']['type'] == 'point' else geo[0][0]
+        location = [geo[0][1], geo[0][0]] if content['coordinates']['type'] == 'point' else geo[0][0]
     elif 'place' in content:
         temp = content['place']
         try:
             geo = temp['bounding_box']['coordinates']
         except:
             return [181, 91]
-        location = [geo[1], geo[0]] if temp['bounding_box']['type'] == 'point' else geo[0][0]
+        location = [geo[0][1], geo[0][0]] if temp['bounding_box']['type'] == 'point' else geo[0][0]
     else:
         location = [181, 91]
     return location
@@ -138,20 +138,27 @@ def save_tweet(path: str, tweets: list):
 
 # 基本并行单元:获取推文基本信息
 def tweet_info_get(src_path: str, dst_path: str):
+    start_time = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     if not os.path.exists(src_path):
         print("no such file"+src_path)
         return
     tweet = []
     if not os.path.exists(os.path.dirname(dst_path)):
-        os.makedirs(os.path.dirname)
+        os.makedirs(os.path.dirname(dst_path))
+        print("the document "+os.path.dirname(dst_path)+ "creating ...")
     for content in read_tweet(src_path, dst_path):
         try:
             info = parse_hashtag_and_loc(content)
         except:
+            print(" an error has occured during load file " + src_path)
             raise ValueError
         if info:
             tweet.append(info)
     save_tweet(dst_path, tweet)
+    end_time = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
+    print(src_path+"read over")
+    print("start at " + str(start_time))
+    print("end at " + str(end_time))
 
 
 # 基本并行单元：获取用户信息

@@ -38,7 +38,7 @@ def add_user_info(user, users):
     users[user_id]['character_tweet'] += user['character_tweet']
     for loc in user['location']:
         if loc not in users[user_id]['location']:
-            users[user_id]['location'].append(user['location'])
+            users[user_id]['location'].append(loc)
     if user['name'] != users[user_id]['name']:
         users[user_id]['name']= user['name']
 

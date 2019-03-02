@@ -5,7 +5,6 @@ null = None
 true = True
 
 
-
 # 用户信息读取
 def read_info(src_path):
     print(src_path+"start read")
@@ -66,6 +65,7 @@ def merge_user(src_path_list, dst_path):
 
 # 推特信息合并
 def merge_tweet(src_path_list, dst_path):
+    print('start merge ' + str(src_path_list))
     tweets = []
     for src_path in src_path_list:
         for tweet in read_info(src_path):
@@ -75,6 +75,6 @@ def merge_tweet(src_path_list, dst_path):
 
 
 if __name__ == '__main__':
-    src_path_list = ['E:\\data\\data2_0\\0', 'E:\\data\\data2_0\\1', 'E:\\data\\data2_0\\2']
-    dst_path = "E:\\0"
-    merge_user(src_path_list, dst_path)
+    src_path_list = ["E:\\0"]
+    dst_path = "E:\\1"
+    merge_tweet(src_path_list, dst_path)

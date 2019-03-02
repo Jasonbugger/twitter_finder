@@ -16,19 +16,19 @@ def user_location_get(content):
 def tweet_location_get(content):
     if 'geo' in content:
         geo = content['geo']['coordinates']
-        location = [geo[0][1], geo[0][0]] if content['geo']['type'] == 'point' else geo[0][0]
+        location = [geo[1], geo[0]] if content['geo']['type'] == 'point' else geo[0][0]
     elif 'coordinates' in content:
         geo = content['coordinates']['coordinates']
-        location = [geo[0][1], geo[0][0]] if content['coordinates']['type'] == 'point' else geo[0][0]
+        location = [geo[1], geo[0]] if content['coordinates']['type'] == 'point' else geo[0][0]
     elif 'place' in content:
         temp = content['place']
         try:
             geo = temp['bounding_box']['coordinates']
         except:
-            return [181, 91]
-        location = [geo[0][1], geo[0][0]] if temp['bounding_box']['type'] == 'point' else geo[0][0]
+            return []
+        location = [geo[1], geo[0]] if temp['bounding_box']['type'] == 'point' else geo[0][0]
     else:
-        location = [181, 91]
+        location = []
     return location
 
 
@@ -43,7 +43,7 @@ def tweet_city_get(content):
 # 判断某条内容是否有hashtag
 def has_hashtag(content):
     if content['hashtags']:
-        return content['hashtags']
+        return [x['text'] for x in content['hashtags']]
     return []
 
 
@@ -52,12 +52,13 @@ def parse_hashtag_and_loc(content: dict):
     tweet = {}
     hashtag = has_hashtag(content)
     location = tweet_location_get(content)
-    city = tweet_city_get(content)
-    tweet['id'] = content['id']
-    tweet['location'] = location
-    tweet['city'] = city
-    tweet['hashtags'] = hashtag
-    tweet['user_id'] = content['user']['id']
+    if hashtag and location:
+        city = tweet_city_get(content)
+        tweet['id'] = content['id']
+        tweet['location'] = location
+        tweet['city'] = city
+        tweet['hashtags'] = hashtag
+        tweet['user_id'] = content['user']['id']
     return tweet
 
 
@@ -127,6 +128,9 @@ def save_user(path: str, users: dict):
 
 # 储存推特内容
 def save_tweet(path: str, tweets: list):
+    if not os.path.exists(os.path.dirname(path)):
+        os.makedirs(os.path.dirname(path))
+        print('dir has made')
     with open(path, 'w', encoding='utf-8') as f:
         for i in tweets:
             try:
@@ -138,22 +142,26 @@ def save_tweet(path: str, tweets: list):
 
 # 基本并行单元:获取推文基本信息
 def tweet_info_get(src_path: str, dst_path: str):
+    print("start"+src_path)
     start_time = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     if not os.path.exists(src_path):
         print("no such file"+src_path)
         return
     tweet = []
     if not os.path.exists(os.path.dirname(dst_path)):
+        print("the document " + os.path.dirname(dst_path) + "creating ...")
         os.makedirs(os.path.dirname(dst_path))
-        print("the document "+os.path.dirname(dst_path)+ "creating ...")
+
     for content in read_tweet(src_path, dst_path):
         try:
             info = parse_hashtag_and_loc(content)
         except:
             print(" an error has occured during load file " + src_path)
+            print(info)
             raise ValueError
         if info:
             tweet.append(info)
+    print('saving')
     save_tweet(dst_path, tweet)
     end_time = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     print(src_path+"read over")

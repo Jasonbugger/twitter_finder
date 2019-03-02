@@ -26,7 +26,7 @@
         <a href={{url_for("Main_Search")}} class="nav-link">主页</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">用户地理分布</a>
+        <a href={{url_for("show_user_location",hashtag='all')}} class="nav-link">用户地理分布</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href={{url_for('show_hashtag_location',hashtag='all')}} class="nav-link">主题地理分布</a>
@@ -100,6 +100,7 @@
 					<i>
 					hashtag</i>
 					{{hashtag_form.Hashtag}}
+                   {{hashtag_form.attr}}
 					{{hashtag_form.submit2}}
 					</form>
                   <button type="button" class="btn bg-info btn-sm" data-widget="collapse">
@@ -108,7 +109,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <div id="charts" style="height: 600px; width:1000px"></div>
+                <div id="charts" style="height: 600px; width:1300px"></div>
               </div>
               <!-- /.card-body -->
               <!-- /.card-footer -->
@@ -163,6 +164,143 @@
             zoom: 1,
             roam: true
         },
+              bmap: {
+        center: [-2.114129, 37.550339],
+        zoom: 1,
+        roam: true,
+        mapStyle: {
+            styleJson: [
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#044161"
+                        }
+                    },
+                    {
+                        "featureType": "land",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "boundary",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#064f85"
+                        }
+                    },
+                    {
+                        "featureType": "railway",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#005b96",
+                            "lightness": 1
+                        }
+                    },
+                    {
+                        "featureType": "highway",
+                        "elementType": "labels",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "geometry",
+                        "stylers": {
+                            "color": "#004981"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#00508b"
+                        }
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "green",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#056197",
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "subway",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "manmade",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "local",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "arterial",
+                        "elementType": "labels",
+                        "stylers": {
+                            "visibility": "off"
+                        }
+                    },
+                    {
+                        "featureType": "boundary",
+                        "elementType": "geometry.fill",
+                        "stylers": {
+                            "color": "#029fd4"
+                        }
+                    },
+                    {
+                        "featureType": "building",
+                        "elementType": "all",
+                        "stylers": {
+                            "color": "#1a5787"
+                        }
+                    },
+                    {
+                        "featureType": "label",
+                        "elementType": "all",
+                        "stylers": {
+                            "visibility": "on"
+                        }
+                    }
+            ]
+        }
+    },
         visualMap: {
             show: false,
             top: 'top',
@@ -171,20 +309,21 @@
             seriesIndex: 0,
             calculable: true,
             inRange: {
-                color: ['blue', 'blue', 'green', 'yellow', 'red']
+                color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
             }
         },
         series: [{
             type: 'heatmap',
             coordinateSystem: 'bmap',
             data: {{data}},
-            pointSize: 0.5,
-            blurSize: 0.6
+            pointSize: 5,
+            blurSize: 8
         }]
     };
     var tweet_location_chart = echarts.init(document.getElementById('charts'))
     tweet_location_chart.setOption(option)
-
+	$('#charts').resize(function () {
+	    tweet_location_chart.resize();})
 
 </script>
 

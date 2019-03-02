@@ -2,14 +2,11 @@ from flask import render_template, url_for, redirect, Response, Flask, request, 
 from wtforms import StringField, SubmitField, RadioField, SelectField, Form
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
-import json
 import sys
 from datetime import timedelta
 from flask_mongoengine import MongoEngine
-import mongoengine
-import math
 from LoadInDB import TUser
-from LoadInDB import Tweet_Info
+from LoadInDB import TweetInfo
 
 sys.path.append(r'E:\twitter_finder')
 app = Flask(__name__)
@@ -35,6 +32,7 @@ class SearchForm(Form):
 
 class HashtagChoser(Form):
     Hashtag = SelectField('hashtag', [DataRequired()])
+    attr = SelectField('属性', [DataRequired()],choices=[(1, '情感'), (2, '星座'), (3, '爱情')])
     submit2 = SubmitField('change')
 
 
@@ -63,18 +61,11 @@ def ShowUser(usertype, userinfo):
 #        return "no user"
 
 
-# 统计某类hashtag中的人的相关属性的分布
-@app.route('/tweet/hashtag/<hashtag>')
-def show_hashTag(hashtag):
-
-    return
-
-
 # 显示人地理位置分布
 @app.route('/user/location/<hashtag>')
-def show_user_location(hashtag='all'):
+def show_user_location(hashtag='all', attr='happiness'):
     users = TUser()
-    locations = users.find_loc_by_hashtag(hashtag)
+    locations = users.find_loc_by_hashtag(hashtag, attr)
     search_form = SearchForm(request.form)
     hashtag_form = HashtagChoser(request.form)
     hashtag_form.Hashtag.choices = get_hashtags()
@@ -88,8 +79,7 @@ def get_hashtags():
 
 @app.route('/tweet/<hashtag>', methods=["GET", "POST"])
 def show_hashtag_location(hashtag='all'):
-    tweet_db = Tweet_Info()
-    locations = tweet_db.find_loc_by_hashtag(hashtag)
+    locations = TweetInfo.find_loc_by_hashtag(hashtag)
     search_form = SearchForm(request.form)
     hashtag_form = HashtagChoser(request.form)
     hashtag_form.Hashtag.choices = get_hashtags()

@@ -20,6 +20,8 @@ class TUser(Document):
     age_tweet = IntField()
     gender_tweet = IntField()
     total_tweet = IntField()
+    lat = FloatField()
+    lon = FloatField()
     meta = {
         'indexes': ['ID', 'location']
     }
@@ -67,9 +69,22 @@ class TUser(Document):
     def itter():
         for i in TUser.objects.all():
             yield i
+    @staticmethod
+    def find_loc_by_hashtag(hashtag, attr):
+        tag = 1
+        # 测试模块
+        loc = []
+        if tag == 1:
+            for i in range(1000):
+                loc.append([random.random()*360-180, random.random()*160-80, random.random()*5])
+        else:
+            for i in TUser.objects(hashtags=hashtag):
+                loc.append([i.lon, i.lat, i.name])
+
+        return loc
 
 
-class Tweet_Info(Document):
+class TweetInfo(Document):
     ID = IntField(required=True, unique=True)
     hashtags = ListField(StringField(max_length=50),max_length=20)
     city = StringField(max_length=100)
@@ -83,19 +98,20 @@ class Tweet_Info(Document):
     def __str__(self):
         return str(self.ID) + "\n\t"+str(self.hashtags)+"\n\t"+self.city+"\n\t"+str(self.X)+","+str(self.Y)
 
-    #整理成json格式
-    def find_loc_by_hashtag(self, hashtag):
+    # 整理成json格式
+    @staticmethod
+    def find_loc_by_hashtag(hashtag):
         tag = 1
         # 测试模块
+        loc = []
         if tag == 1:
             array = {}
-            loc = []
+
             for i in range(100):
-                loc.append({'name': random.randint(1, 100), 'lon': random.random()*360-180, 'lat': random.random()*160-80})
+                loc.append([random.random()*360-180, random.random()*160-80, random.random()])
         else:
             for i in self.objects(hashtags=hashtag):
-                x = 1
-        loc = str(loc).replace("\'", "")
+                loc.append([i.lon, i.lat, i.city])
         return loc
 
 

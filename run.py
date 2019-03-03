@@ -31,9 +31,13 @@ class SearchForm(Form):
 
 
 class HashtagChoser(Form):
-    Hashtag = SelectField('hashtag', [DataRequired()])
-    attr = SelectField('属性', [DataRequired()],choices=[(1, '情感'), (2, '星座'), (3, '爱情')])
-    submit2 = SubmitField('change')
+    Hashtag = SelectField('hashtag&attr', [DataRequired()])
+    choices = [('emotion0', '积极'),('emotion1', '消极'),('emotion2', '愤怒'),('emotion3', '期盼'),
+    ('emotion4', '厌恶'),('emotion5', '恐惧'),('emotion6', '喜悦'),('emotion7', '惊讶'),('emotion8', '信任'),
+    ('character0', '宜人性'), ('character1', '认真性'), ('character2', '外倾性'), ('character3', '神经质'), ('character4', '经验开放性'),
+    ('gender0', '性别'),("age0",'年龄：13-18'),("age1",'年龄：19-22'),("age2",'年龄：23-29'),("age3",'年龄：30+')]
+    attr = SelectField('属性', [DataRequired()],choices=choices,default='age1')
+    submit2 = SubmitField('提交')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -62,13 +66,18 @@ def ShowUser(usertype, userinfo):
 
 
 # 显示人地理位置分布
-@app.route('/user/location/<hashtag>')
-def show_user_location(hashtag='all', attr='happiness'):
+@app.route('/user/location/<hashtag>/<attr>',methods=['GET','POST'])
+def show_user_location(hashtag='#all', attr='age1'):
     users = TUser()
     locations = users.find_loc_by_hashtag(hashtag, attr)
     search_form = SearchForm(request.form)
     hashtag_form = HashtagChoser(request.form)
     hashtag_form.Hashtag.choices = get_hashtags()
+    if search_form.validate():
+        query = search_form.query.data
+        return redirect(url_for('ShowUser', usertype=search_form.type.data, userinfo=query))
+    if hashtag_form.submit2.data and hashtag_form.validate():
+        return redirect(url_for('show_user_location', hashtag=hashtag_form.Hashtag.data, attr=hashtag_form.attr.data))
     return render_template('user_hashtag_loc.html', form=search_form, hashtag=hashtag, hashtag_form=hashtag_form, data=locations)
 
 

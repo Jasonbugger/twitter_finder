@@ -69,8 +69,12 @@ class TUser(Document):
     def itter():
         for i in TUser.objects.all():
             yield i
+    
     @staticmethod
     def find_loc_by_hashtag(hashtag, attr):
+        print(attr)
+        index = int(attr[-1])
+        attr = attr[:-1]
         tag = 1
         # 测试模块
         loc = []
@@ -78,9 +82,18 @@ class TUser(Document):
             for i in range(1000):
                 loc.append([random.random()*360-180, random.random()*160-80, random.random()*5])
         else:
-            for i in TUser.objects(hashtags=hashtag):
-                loc.append([i.lon, i.lat, i.name])
-
+            if hashtag == '#all':
+                for i in TUser.objects.all():
+                    if attr=="gender":
+                        loc.append([i.lon,i.lat,i.__getattribute__(attr)])
+                    else:
+                        loc.append([i.lon,i.lat,i.__getattribute__(attr)[index]])
+            else:
+                for i in TUser.objects(hashtags=hashtag):
+                    if attr=="gender":
+                        loc.append([i.lon,i.lat,i.__getattribute__(attr)])
+                    else:
+                        loc.append([i.lon,i.lat,i.__getattribute__(attr)[index]])
         return loc
 
 
@@ -105,13 +118,15 @@ class TweetInfo(Document):
         # 测试模块
         loc = []
         if tag == 1:
-            array = {}
-
-            for i in range(100):
+            for i in range(1000):
                 loc.append([random.random()*360-180, random.random()*160-80, random.random()])
         else:
-            for i in self.objects(hashtags=hashtag):
-                loc.append([i.lon, i.lat, i.city])
+            if hashtag == '#all':
+                for i in TweetInfo.objects():
+                    loc.append([i.lon, i.lat, i.city])
+            else:
+                for i in TweetInfo.objects(hashtags=hashtag):
+                    loc.append([i.lon, i.lat, i.city])
         return loc
 
 

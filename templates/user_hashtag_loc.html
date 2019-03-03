@@ -26,7 +26,7 @@
         <a href={{url_for("Main_Search")}} class="nav-link">主页</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href={{url_for("show_user_location",hashtag='all')}} class="nav-link">用户地理分布</a>
+        <a href={{url_for("show_user_location",hashtag='all',attr='age1')}} class="nav-link">用户地理分布</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href={{url_for('show_hashtag_location',hashtag='all')}} class="nav-link">主题地理分布</a>
@@ -74,7 +74,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">推特地理位置分布</h1>
+            <h1 class="m-0 text-dark">用户属性地理分布</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -181,7 +181,7 @@
                         "featureType": "land",
                         "elementType": "all",
                         "stylers": {
-                            "color": "#004981"
+                            "color": "#0049a4"
                         }
                     },
                     {
@@ -267,7 +267,7 @@
                         "featureType": "local",
                         "elementType": "all",
                         "stylers": {
-                            "visibility": "off"
+                            "visibility": "on"
                         }
                     },
                     {

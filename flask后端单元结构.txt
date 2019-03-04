@@ -18,8 +18,10 @@
 方法：
     modify()：将属性数值进行处理的函数，使之具备可比性
     find(userinfo，usertype)：查找并返回在usertype属性上值为userinfo的用户对象，目前支持的usertype有id和属性
+    return_characters():返回储存的性格信息和性格相关的推特条数
     itter():迭代器，迭代返数据库中所有的对象
-
+    find_loc_by_hashtag(hashtag,attr):根据所给的hashtag查找符合条件的用户并返回相应的属性
+    load_in_db(src_path):将文件中的数据存入数据库  
 
 2.推特数据：
 结构：

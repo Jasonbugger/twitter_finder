@@ -105,9 +105,18 @@ def parse_user_info(content: dict):
     if gender:
         gender_tweet = 1
 
-    user = {'user_id': user_id, 'age': age, 'gender': gender, 'name': name,
-                'emotion': emotion, 'location': location, 'character': character, 'emotion_tweet': emotion_tweet,
-                'character_tweet': character_tweet, 'age_tweet': age_tweet, 'gender_tweet': gender_tweet, 'total_tweet': 1}
+    user = {'user_id': user_id, 
+            'age': age, 
+            'gender': gender, 
+            'name': name,
+            'emotion': emotion, 
+            'location': location, 
+            'character': character, 
+            'emotion_tweet': emotion_tweet,
+            'character_tweet': character_tweet, 
+            'age_tweet': age_tweet, 
+            'gender_tweet': gender_tweet, 
+            'total_tweet': 1}
     return user
 
 

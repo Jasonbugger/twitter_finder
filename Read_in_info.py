@@ -1,3 +1,4 @@
+#用户属性检测
 import nltk
 from dict_read_in import Emolex, FCdict, gender_dict, age_dict
 import re

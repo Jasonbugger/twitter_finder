@@ -715,7 +715,13 @@ option = {
         name: '情绪（Emotion）',
         type: 'radar',
         // areaStyle: {normal: {}},
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        itemStyle: {
+          normal: {
+            areaStyle: {
+              type: 'default'
+            }
+          }
+        },
         data : [
             {
                 value : sorted,
@@ -775,13 +781,29 @@ emotionchart.setOption(option)
             stack: '总量',
             barWidth: 11,
             cursor: 'default',
-            itemStyle: { borderWidth: 3, borderStyle: 'solid', borderColor: '#FFFFFF', color: '#FFD700' },
-            label: { show: true, padding: [0, 0, 40, 0], fontSize: 14, color: '#333333', formatter($data) { return Math.abs($data.data*100/({{user.emotion[0]}}+{{user.emotion[1]}})).toFixed(2) + '%' } },
+            itemStyle: {
+               borderWidth: 3, 
+               borderStyle: 'solid', 
+               borderColor: '#FFFFFF', 
+               color: '#FFD700' },
+            label: { 
+              show: true, 
+              padding: [0, 0, 40, 0], 
+              fontSize: 14, 
+              color: '#333333', 
+              formatter($data) { 
+                return Math.abs($data.data*100/({{user.emotion[0]}}+{{user.emotion[1]}})).toFixed(2) + '%' } 
+              },
             markPoint: {
                 symbol: 'image://data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNDkwLjY2NyA0OTAuNjY3IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0OTAuNjY3IDQ5MC42Njc7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6I0ZGQzEwNzsiIGN4PSIyNDUuMzMzIiBjeT0iMjQ1LjMzMyIgcj0iMTYwIi8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZENTRGOyIgZD0iTTI0NS4zMzMsNjRDMjUxLjIyNCw2NCwyNTYsNTkuMjI0LDI1Niw1My4zMzNWMTAuNjY3QzI1Niw0Ljc3NiwyNTEuMjI0LDAsMjQ1LjMzMywwDQoJCWMtNS44OTEsMC0xMC42NjcsNC43NzYtMTAuNjY3LDEwLjY2N3Y0Mi42NjdDMjM0LjY2Nyw1OS4yMjQsMjM5LjQ0Miw2NCwyNDUuMzMzLDY0eiIvPg0KCTxwYXRoIHN0eWxlPSJmaWxsOiNGRkQ1NEY7IiBkPSJNMjQ1LjMzMyw0MjYuNjY3Yy01Ljg5MSwwLTEwLjY2Nyw0Ljc3Ni0xMC42NjcsMTAuNjY3VjQ4MGMwLDUuODkxLDQuNzc2LDEwLjY2NywxMC42NjcsMTAuNjY3DQoJCWM1Ljg5MSwwLDEwLjY2Ny00Ljc3NiwxMC42NjctMTAuNjY3di00Mi42NjdDMjU2LDQzMS40NDIsMjUxLjIyNCw0MjYuNjY3LDI0NS4zMzMsNDI2LjY2N3oiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZENTRGOyIgZD0iTTQ4MCwyMzQuNjY3aC00Mi42NjdjLTUuODkxLDAtMTAuNjY3LDQuNzc2LTEwLjY2NywxMC42NjdjMCw1Ljg5MSw0Ljc3NiwxMC42NjcsMTAuNjY3LDEwLjY2N0g0ODANCgkJYzUuODkxLDAsMTAuNjY3LTQuNzc2LDEwLjY2Ny0xMC42NjdDNDkwLjY2NywyMzkuNDQyLDQ4NS44OTEsMjM0LjY2Nyw0ODAsMjM0LjY2N3oiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZENTRGOyIgZD0iTTY0LDI0NS4zMzNjMC01Ljg5MS00Ljc3Ni0xMC42NjctMTAuNjY3LTEwLjY2N0gxMC42NjdDNC43NzYsMjM0LjY2NywwLDIzOS40NDIsMCwyNDUuMzMzDQoJCUMwLDI1MS4yMjQsNC43NzYsMjU2LDEwLjY2NywyNTZoNDIuNjY3QzU5LjIyNCwyNTYsNjQsMjUxLjIyNCw2NCwyNDUuMzMzeiIvPg0KCTxwYXRoIHN0eWxlPSJmaWxsOiNGRkQ1NEY7IiBkPSJNMTQwLjA5Niw4NC4zOTVjMS45MDksMy4zMDcsNS40NCw1LjM0MSw5LjI1OSw1LjMzM2MxLjg3MywwLjAwNywzLjcxNS0wLjQ4Niw1LjMzMy0xLjQyOQ0KCQljNS4xMDItMi45NDYsNi44NDktOS40NjksMy45MDQtMTQuNTcxbC0yMS4zMzMtMzYuOTQ5Yy0yLjk3OS01LjA4Mi05LjUxNC02Ljc4Ny0xNC41OTYtMy44MDgNCgkJYy01LjAzNSwyLjk1MS02Ljc2Myw5LjQwMS0zLjg3OCwxNC40NzRMMTQwLjA5Niw4NC4zOTV6Ii8+DQoJPHBhdGggc3R5bGU9ImZpbGw6I0ZGRDU0RjsiIGQ9Ik0zNTAuNTcxLDQwNi4yNzJjLTIuOTgtNS4wODItOS41MTUtNi43ODYtMTQuNTk3LTMuODA2Yy01LjAzMywyLjk1Mi02Ljc2MSw5LjQtMy44NzgsMTQuNDczDQoJCWwyMS4zMzMsMzYuOTQ5YzEuOTA5LDMuMzA3LDUuNDQsNS4zNDEsOS4yNTksNS4zMzNjMS44NzMsMC4wMDcsMy43MTUtMC40ODYsNS4zMzMtMS40MjljNS4xMDItMi45NDYsNi44NDktOS40NjksMy45MDQtMTQuNTcxDQoJCUwzNTAuNTcxLDQwNi4yNzJ6Ii8+DQoJPHBhdGggc3R5bGU9ImZpbGw6I0ZGRDU0RjsiIGQ9Ik00MTEuNjA1LDE2MGMxLjg3MywwLjAwNywzLjcxNS0wLjQ4Niw1LjMzMy0xLjQyOWwzNi45NDktMjEuMzMzDQoJCWM1LjIyLTIuNzMxLDcuMjM4LTkuMTc2LDQuNTA3LTE0LjM5NmMtMi43MzEtNS4yMi05LjE3Ni03LjIzOC0xNC4zOTYtNC41MDdjLTAuMjY2LDAuMTM5LTAuNTI1LDAuMjg5LTAuNzc4LDAuNDVsLTM2Ljk0OSwyMS4zMzMNCgkJYy01LjEwMiwyLjk0Ni02Ljg0OSw5LjQ3LTMuOTA0LDE0LjU3MWMxLjkwNSwzLjMsNS40MjYsNS4zMzMsOS4yMzcsNS4zMzNWMTYweiIvPg0KCTxwYXRoIHN0eWxlPSJmaWxsOiNGRkQ1NEY7IiBkPSJNNzMuNzI4LDMzMi4wOTZsLTM2Ljk0OSwyMS4zMzNjLTUuMTAyLDIuOTQ2LTYuODQ5LDkuNDY5LTMuOTA0LDE0LjU3MQ0KCQljMS45MDUsMy4zLDUuNDI2LDUuMzMzLDkuMjM3LDUuMzMzYzEuODczLDAuMDA3LDMuNzE1LTAuNDg2LDUuMzMzLTEuNDI5bDM2Ljk0OS0yMS4zMzNjNS4yMi0yLjczMSw3LjIzOC05LjE3Niw0LjUwNy0xNC4zOTYNCgkJYy0yLjczMS01LjIyLTkuMTc2LTcuMjM4LTE0LjM5Ni00LjUwN2MtMC4yNjYsMC4xMzktMC41MjUsMC4yODktMC43NzgsMC40NUw3My43MjgsMzMyLjA5NnoiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZENTRGOyIgZD0iTTM2Ljc3OSwxMzcuMjM3bDM2Ljk0OSwyMS4zMzNjMS42MTMsMC45MzksMy40NDYsMS40MzMsNS4zMTIsMS40MjkNCgkJYzUuODkxLDAsMTAuNjY2LTQuNzc2LDEwLjY2Ni0xMC42NjdjMC0zLjgxLTIuMDMzLTcuMzMxLTUuMzMzLTkuMjM3bC0zNi45NDktMjEuMzMzYy00Ljk3Mi0zLjE2LTExLjU2NC0xLjY5Mi0xNC43MjQsMy4yNzkNCgkJcy0xLjY5MiwxMS41NjQsMy4yNzksMTQuNzI0YzAuMjUzLDAuMTYxLDAuNTEyLDAuMzExLDAuNzc4LDAuNDVMMzYuNzc5LDEzNy4yMzd6Ii8+DQoJPHBhdGggc3R5bGU9ImZpbGw6I0ZGRDU0RjsiIGQ9Ik00NTMuODg4LDM1My40MjlsLTM2Ljk0OS0yMS4zMzNjLTQuOTcyLTMuMTYtMTEuNTY0LTEuNjkyLTE0LjcyNCwzLjI3OQ0KCQljLTMuMTYsNC45NzEtMS42OTIsMTEuNTY0LDMuMjc5LDE0LjcyNGMwLjI1MywwLjE2MSwwLjUxMywwLjMxMSwwLjc3OCwwLjQ1bDM2Ljk0OSwyMS4zMzNjMS42MTksMC45NDMsMy40NiwxLjQzNiw1LjMzMywxLjQyOQ0KCQljNS44OTEsMCwxMC42NjYtNC43NzYsMTAuNjY2LTEwLjY2N2MwLTMuODExLTIuMDMzLTcuMzMyLTUuMzMzLTkuMjM3VjM1My40Mjl6Ii8+DQoJPHBhdGggc3R5bGU9ImZpbGw6I0ZGRDU0RjsiIGQ9Ik0zMzYsODguMjk5YzEuNjE5LDAuOTQzLDMuNDYsMS40MzYsNS4zMzMsMS40MjljMy44MTgsMC4wMDgsNy4zNDktMi4wMjcsOS4yNTktNS4zMzNsMjEuMzMzLTM2Ljk0OQ0KCQljMi45MTEtNS4xMjEsMS4xMTktMTEuNjMzLTQuMDAyLTE0LjU0NGMtNS4wNzMtMi44ODMtMTEuNTIxLTEuMTU2LTE0LjQ3MywzLjg3OGwtMjEuMzMzLDM2Ljk0OQ0KCQlDMzI5LjE2OCw3OC44MjQsMzMwLjkwNiw4NS4zNDYsMzM2LDg4LjI5OXoiLz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojRkZENTRGOyIgZD0iTTE1NC42NjcsNDAyLjM2OGMtNS4xMDItMi45NDUtMTEuNjI1LTEuMTk4LTE0LjU3MSwzLjkwNGwtMjEuMzMzLDM2Ljk0OQ0KCQljLTIuOTQ1LDUuMTAyLTEuMTk4LDExLjYyNSwzLjkwNCwxNC41NzFjMS42MTksMC45NDMsMy40NiwxLjQzNiw1LjMzMywxLjQyOWMzLjgxOCwwLjAwOCw3LjM1LTIuMDI3LDkuMjU5LTUuMzMzbDIxLjMzMy0zNi45NDkNCgkJYzIuOTQtNS4xMDUsMS4xODYtMTEuNjI3LTMuOTE5LTE0LjU2N0MxNTQuNjcxLDQwMi4zNywxNTQuNjY5LDQwMi4zNjksMTU0LjY2Nyw0MDIuMzY4eiIvPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=',
                 symbolSize: [72, 72],
                 symbolOffset: [-48, 0],
-                label: { position: 'bottom', padding: [10, 0, 0, 0], fontSize: 14, color: '#333333', formatter: '积极' },
+                label: { 
+                  position: 'bottom', 
+                  padding: [10, 0, 0, 0], 
+                  fontSize: 14, 
+                  color: '#333333', 
+                  formatter: '积极' },
                 data: [{ type: 'max' }],
                 silent: true
             }
@@ -793,13 +815,28 @@ emotionchart.setOption(option)
             stack: '总量',
             barWidth: 11,
             cursor: 'default',
-            itemStyle: { borderWidth: 3, borderStyle: 'solid', borderColor: '#FFFFFF', color: '#696969' },
-            label: { show: true, padding: [0, 0, 40, 0], fontSize: 14, color: '#333333', formatter($data) { return Math.abs($data.data*100/({{user.emotion[0]}}+{{user.emotion[1]}})).toFixed(2) + '%' } },
+            itemStyle: { 
+              borderWidth: 3, 
+              borderStyle: 'solid', 
+              borderColor: '#FFFFFF', 
+              color: '#696969' },
+            label: { 
+              show: true, 
+              padding: [0, 0, 40, 0], 
+              fontSize: 14, color: '#333333', 
+              formatter($data) { 
+                return Math.abs($data.data*100/({{user.emotion[0]}}+{{user.emotion[1]}})).toFixed(2) + '%' } 
+              },
             markPoint: {
                 symbol: 'image://data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzMuMDYyIDMzLjA2MiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzMuMDYyIDMzLjA2MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGc+DQoJCTxwYXRoIGQ9Ik0yNS42MTUsMjIuMzI0Yy0wLjI3NiwwLTAuNS0wLjIyNC0wLjUtMC41czAuMjI0LTAuNSwwLjUtMC41YzMuNTU1LDAsNi40NDYtMi44OTIsNi40NDYtNi40NDYNCgkJCWMwLTMuNTUzLTIuODkyLTYuNDQzLTYuNDQ2LTYuNDQzYy0wLjI5OCwwLTAuNjEzLDAuMDI2LTAuOTkxLDAuMDgzYy0wLjIxNCwwLjAzMy0wLjQyNi0wLjA3OS0wLjUyMi0wLjI3Mw0KCQkJQzIyLjU1OCw1LjExNCwxOS40NCwzLjE3LDE1Ljk2NSwzLjE3Yy00LjE4NCwwLTcuODA0LDIuODM5LTguODA0LDYuOTA0Yy0wLjA1NiwwLjIyOC0wLjI3OCwwLjM3My0wLjQ5OCwwLjM4bC0wLjEyNy0wLjAwNw0KCQkJYy0wLjAwMywwLTAuMDA2LDAtMC4wMDksMEMzLjQzNywxMC40NDcsMSwxMi44ODYsMSwxNS44ODRjMCwzLDIuNDQxLDUuNDQsNS40NDIsNS40NGMwLjI3NiwwLDAuNSwwLjIyNCwwLjUsMC41DQoJCQlzLTAuMjI0LDAuNS0wLjUsMC41QzIuODksMjIuMzI0LDAsMTkuNDM1LDAsMTUuODg0YzAtMy41MDIsMi44MS02LjM2MSw2LjI5NC02LjQ0YzEuMjQxLTQuMzAzLDUuMTYxLTcuMjc0LDkuNjctNy4yNzQNCgkJCWMzLjczOCwwLDcuMTA0LDIuMDI2LDguODY5LDUuMzExYzAuMjgtMC4wMzEsMC41MzQtMC4wNDYsMC43ODEtMC4wNDZjNC4xMDYsMCw3LjQ0NiwzLjMzOSw3LjQ0Niw3LjQ0Mw0KCQkJQzMzLjA2MiwxOC45ODQsMjkuNzIxLDIyLjMyNCwyNS42MTUsMjIuMzI0eiIvPg0KCQk8cGF0aCBkPSJNMjUuNjE1LDIyLjMyNGMtMC4yNzYsMC0wLjUtMC4yMjQtMC41LTAuNXMwLjIyNC0wLjUsMC41LTAuNWMzLjU1NSwwLDYuNDQ2LTIuODkyLDYuNDQ2LTYuNDQ2DQoJCQljMC0zLjU1My0yLjg5Mi02LjQ0My02LjQ0Ni02LjQ0M2MtMS44NjIsMC0zLjYzMywwLjgwNS00Ljg1OCwyLjIwOGMtMC4xODEsMC4yMDktMC40OTcsMC4yMy0wLjcwNSwwLjA0OA0KCQkJYy0wLjIwOC0wLjE4MS0wLjIyOS0wLjQ5Ny0wLjA0OC0wLjcwNWMxLjQxNC0xLjYyMSwzLjQ1OS0yLjU1LDUuNjExLTIuNTVjNC4xMDYsMCw3LjQ0NiwzLjMzOSw3LjQ0Niw3LjQ0Mw0KCQkJQzMzLjA2MiwxOC45ODQsMjkuNzIxLDIyLjMyNCwyNS42MTUsMjIuMzI0eiIvPg0KCTwvZz4NCgk8Zz4NCgkJPHBhdGggZD0iTTguMjc1LDMwLjg5MmMtMC4wNTEsMC0wLjEwMi0wLjAwOC0wLjE1My0wLjAyNGMtMC4yNjMtMC4wODQtMC40MDctMC4zNjYtMC4zMjMtMC42MjlsMC45MTgtMi44NTUNCgkJCWMwLjA4NS0wLjI2MywwLjM2OC0wLjQwNywwLjYyOS0wLjMyM2MwLjI2MywwLjA4NCwwLjQwOCwwLjM2NiwwLjMyMywwLjYyOWwtMC45MTgsMi44NTZDOC42ODMsMzAuNzU3LDguNDg2LDMwLjg5Miw4LjI3NSwzMC44OTJ6DQoJCQkgTTEwLjExMiwyNS4xOGMtMC4wNTEsMC0wLjEwMi0wLjAwOC0wLjE1My0wLjAyNGMtMC4yNjMtMC4wODQtMC40MDgtMC4zNjYtMC4zMjMtMC42MjlsMC45MTgtMi44NTYNCgkJCWMwLjA4NS0wLjI2MywwLjM2Ni0wLjQwNSwwLjYyOS0wLjMyM2MwLjI2MywwLjA4NCwwLjQwNywwLjM2NiwwLjMyMywwLjYyOWwtMC45MTgsMi44NTZDMTAuNTIsMjUuMDQ1LDEwLjMyNCwyNS4xOCwxMC4xMTIsMjUuMTh6DQoJCQkiLz4NCgk8L2c+DQoJPGc+DQoJCTxwYXRoIGQ9Ik0xOC4yNzUsMzAuODkyYy0wLjA1MSwwLTAuMTAyLTAuMDA4LTAuMTUzLTAuMDI0Yy0wLjI2My0wLjA4NC0wLjQwNy0wLjM2Ni0wLjMyMy0wLjYyOWwwLjkxOC0yLjg1NQ0KCQkJYzAuMDg1LTAuMjYzLDAuMzY4LTAuNDA3LDAuNjI5LTAuMzIzYzAuMjYzLDAuMDg0LDAuNDA4LDAuMzY2LDAuMzIzLDAuNjI5bC0wLjkxOCwyLjg1Ng0KCQkJQzE4LjY4MywzMC43NTcsMTguNDg2LDMwLjg5MiwxOC4yNzUsMzAuODkyeiBNMjAuMTEyLDI1LjE4Yy0wLjA1MSwwLTAuMTAyLTAuMDA4LTAuMTUzLTAuMDI0DQoJCQljLTAuMjYzLTAuMDg0LTAuNDA4LTAuMzY2LTAuMzIzLTAuNjI5bDAuOTE4LTIuODU2YzAuMDg1LTAuMjYzLDAuMzY2LTAuNDA1LDAuNjI5LTAuMzIzYzAuMjYzLDAuMDg0LDAuNDA3LDAuMzY2LDAuMzIzLDAuNjI5DQoJCQlsLTAuOTE4LDIuODU2QzIwLjUyLDI1LjA0NSwyMC4zMjQsMjUuMTgsMjAuMTEyLDI1LjE4eiIvPg0KCTwvZz4NCgk8Zz4NCgkJPHBhdGggZD0iTTEzLjI3NSwzMC44OTJjLTAuMDUxLDAtMC4xMDItMC4wMDgtMC4xNTMtMC4wMjRjLTAuMjYzLTAuMDg0LTAuNDA3LTAuMzY2LTAuMzIzLTAuNjI5bDAuOTE4LTIuODU1DQoJCQljMC4wODUtMC4yNjMsMC4zNjgtMC40MDcsMC42MjktMC4zMjNjMC4yNjMsMC4wODQsMC40MDgsMC4zNjYsMC4zMjMsMC42MjlsLTAuOTE4LDIuODU2DQoJCQlDMTMuNjgzLDMwLjc1NywxMy40ODYsMzAuODkyLDEzLjI3NSwzMC44OTJ6IE0xNS4xMTIsMjUuMThjLTAuMDUxLDAtMC4xMDItMC4wMDgtMC4xNTMtMC4wMjQNCgkJCWMtMC4yNjMtMC4wODQtMC40MDgtMC4zNjYtMC4zMjMtMC42MjlsMC45MTgtMi44NTZjMC4wODUtMC4yNjMsMC4zNjYtMC40MDUsMC42MjktMC4zMjNjMC4yNjMsMC4wODQsMC40MDcsMC4zNjYsMC4zMjMsMC42MjkNCgkJCWwtMC45MTgsMi44NTZDMTUuNTIsMjUuMDQ1LDE1LjMyNCwyNS4xOCwxNS4xMTIsMjUuMTh6Ii8+DQoJPC9nPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=',
                 symbolSize: [72, 72],
                 symbolOffset: [48, 0],
-                label: { position: 'bottom', padding: [10, 0, 0, 0], fontSize: 14, color: '#333333', formatter: '消极' },
+                label: { 
+                  position: 'bottom', 
+                  padding: [10, 0, 0, 0], 
+                  fontSize: 14, 
+                  color: '#333333', 
+                  formatter: '消极' },
                 data: [{ type: 'max' }],
                 silent: true
             }

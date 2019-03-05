@@ -83,11 +83,11 @@
     <!-- Main content -->
     <section class="content" >
     <i>1.上方搜索框用于查找用户相关信息</i><br>
-    <i>2.主题地理分布可查看不同hashtag的推文地理分布</i>
+    <i>2.主题地理分布可查看不同hashtag的推文地理分布</i><br>
     <i>3.用户地理分布页面可查看以hashtag分类的用户各类属性在地理上的分布</i>
     </section>
     <section id="wordcloud"style="width: 800px; height: 600px">
-      
+
     </section>
     <!-- /.content -->
   </div>
@@ -664,7 +664,14 @@
       option = {
         backgroundColor:'#fff',
         tooltip: {
-            show: false
+            show: true,
+            formater:"热度:{c}",	          	
+            backgroundColor:'rgba(255,255,255,0)',
+            textStyle:{
+              fontWeight:'bold', 
+              fontSize:20,
+              color:'#000000'
+            }
         },
         series: [{
             type: 'wordCloud',

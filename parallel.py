@@ -104,7 +104,7 @@ def main(source_root_path, dst_root_path, process_number, final_path, program_to
 
 
 if __name__ == '__main__':
-    source_root_path = 'F:\\user_profiles'
+    source_root_path = 'H:\\user_profiles'
     dst_root_path = "E:\\data"
     process_number = 8
     final_path = "E:\\final_data"

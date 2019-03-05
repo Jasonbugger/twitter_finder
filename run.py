@@ -84,6 +84,7 @@ def ShowUser(usertype, userinfo):
                         usertype=search_form.type.data, 
                         userinfo=query))
     if user:
+        user.name = user.name.replace('u',"").replace("\'", "")
         return render_template('user.html', 
                                 user=user, 
                                 form=search_form)

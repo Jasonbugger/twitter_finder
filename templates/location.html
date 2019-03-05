@@ -108,7 +108,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <div id="charts" style="height: 500px;width: 1300px"></div>
+                <div id="charts" style="height: 800px;width: 1300px"></div>
               </div>
               <!-- /.card-body -->
               <!-- /.card-footer -->
@@ -303,8 +303,8 @@
     series:{
         type: "scatter",
         coordinateSystem: 'bmap',
-        data:{{data}},
-        symbolSize:3
+        data:{{data|tojson}},
+        symbolSize:5
     },
     tooltip:{
       formatter:function(params) {

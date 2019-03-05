@@ -57,7 +57,7 @@ class TUser(Document):
         self.age = [round(math.fabs(self.age[a]), 4)*(-1 if self.age[a] < 0 else 1) for a in range(4)]
         self.emotion = self.emotion[:2] + \
                     [round(self.emotion[a] / (self.total_tweet+1), 2) for a in range(2, 10)]
-        x = sum(self.emotion[2:])+1
+        x = max(self.emotion[2:])+1
         self.emotion = self.emotion[:2] + \
                     [round(self.emotion[a] / x, 2) for a in range(2, 10)]
         self.character = [round(self.character[a] / (self.total_tweet+1), 2) for a in range(5)]
@@ -99,28 +99,28 @@ class TUser(Document):
         print(attr)
         index = int(attr[-1])
         attr = attr[:-1]
-        tag = 1
+        tag = 0
         # 测试模块
         loc = []
         if tag == 1:
             for i in range(1000):
                 loc.append([random.random()*360-180, random.random()*160-80, random.random()*5])
         else:
-            if hashtag == '#all':
-                for i in TUser.objects.all():
-                    if attr=="gender":
-                        loc.append([i.lon,i.lat,i.__getattribute__(attr)])
+            if hashtag == 'all':
+                for i in TUser.objects.all()[:100000]:
+                    if attr == "gender":
+                        loc.append([i.lon, i.lat, i.__getattribute__(attr)])
                     else:
-                        loc.append([i.lon,i.lat,i.__getattribute__(attr)[index]])
+                        loc.append([i.lon, i.lat, i.__getattribute__(attr)[index]])
             else:
-                for i in TUser.objects(hashtags=hashtag):
-                    if attr=="gender":
-                        loc.append([i.lon,i.lat,i.__getattribute__(attr)])
+                for i in Hashtag.objects(hashtags=hashtag).first().user_id:
+                    if attr == "gender":
+                        user = TUser.objects(ID=i).first()
+                        loc.append([user.lon, user.lat, user.__getattribute__('gender')])
                     else:
-                        loc.append([i.lon,i.lat,i.__getattribute__(attr)[index]])
+                        loc.append([user.lon, user.lat, user.__getattribute__(attr)[index]])
         return loc
 
-        
     # 写入用户数据
     @staticmethod
     def load_in_db(src_path):
@@ -159,7 +159,9 @@ class TUser(Document):
                             gender_tweet=gender_tweet,
                             emotion_tweet=emotion_tweet,
                             character_tweet=character_tweet,
-                            total_tweet=total_tweet)
+                            total_tweet=total_tweet,
+                            lon=0,
+                            lat=0)
 
                 user.save()
 
@@ -177,10 +179,12 @@ class TUser(Document):
     find_loc_by_hashtag(hashtag):找到包含指定hashtag的推特并返回推特的地理坐标，初步整理为json易于转换的格式
     load_in_db(src_path):将文件中的数据存入数据库
 """
+
+
 class TweetInfo(Document):
     ID = IntField(required=True, unique=True)
-    hashtags = ListField(StringField(max_length=50),max_length=20)
-    city = StringField(max_length=100)
+    hashtags = ListField(StringField(max_length=100), max_length=20)
+    city = StringField(max_length=200)
     user_id = IntField()
     lat = FloatField()
     lon = FloatField()
@@ -194,19 +198,25 @@ class TweetInfo(Document):
     # 整理成json格式
     @staticmethod
     def find_loc_by_hashtag(hashtag):
-        tag = 1
+        tag = 0
         # 测试模块
         loc = []
         if tag == 1:
             for i in range(1000):
                 loc.append([random.random()*360-180, random.random()*160-80, random.random()])
         else:
-            if hashtag == '#all':
-                for i in TweetInfo.objects.all():
-                    loc.append([i.lon, i.lat, i.city])
+            if hashtag == 'all':
+                for i in TweetInfo.objects.all()[:100000]:
+                    loc.append([i.lon, i.lat, str(i.city)])
             else:
-                for i in TweetInfo.objects(hashtags=hashtag):
-                    loc.append([i.lon, i.lat, i.city])
+                for i in Hashtag.objects(hashtag=hashtag):
+                    if not i:
+                        return []
+                    for j in i.twitter_id:
+
+                        twitter = TweetInfo.objects(ID=j).first()
+                        loc.append([twitter.lon, twitter.lat, str(twitter.city)])
+        print(len(loc))
         return loc
     # 写入用户数据
     @staticmethod
@@ -214,16 +224,15 @@ class TweetInfo(Document):
         with open(src_path, 'r', encoding='utf-8') as f:
             for a in f:
                 a = a[:-1]
+                print(a)
                 try:
                     a = eval(a)
-                    print('u\'' + a['name'] + '\'')
-                    print([eval('u\''+str(x)+'\'') for x in a['location']])
                 except:
                     print('not a dict')
                     continue
                 id = a['id']
                 hashtags = a['hashtags']
-                city = eval('u\''+a['city']+'\'')
+                city = eval('u\"'+a['city'].replace('\"', "") + '\"')
                 user_id = a['user_id']
                 lon = a['location'][0]
                 lat = a['location'][1]
@@ -235,9 +244,18 @@ class TweetInfo(Document):
                     lat=lat,
                     lon=lon,
                 )
-                tweet.save()
+                try:
+                    tweet.save()
+                except:
+                    continue
+
+
+class Hashtag(Document):
+    hashtag = StringField(max_length=200)
+    user_id = ListField(IntField())
+    twitter_id = ListField(IntField())
 
 
 if __name__ == "__main__":
-    TUser.load_in_db("E:\\final_user_data\\0")
+    # TUser.load_in_db("E:\\final_user_data\\0")
     TweetInfo.load_in_db("E:\\final_data\\0")
